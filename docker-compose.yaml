@@ -1,0 +1,48 @@
+version: '3'
+services:
+  mediawiki: 
+    depends_on:
+      - database
+    build: ./image
+    restart: always
+    links:
+      - database
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - w:/var/www/html/w
+      - ./html:/var/www/html
+      - ./secret:/var/secret
+    environment:
+      LOG4J_FORMAT_MSG_NO_LOOKUPS: "true"
+  database:
+    image: mariadb:10.5
+    restart: always
+    environment:
+      MYSQL_DATABASE: hamichlol_main
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: rootpassword
+    volumes:
+      - ./db-files:/var/lib/mysql
+  memcached:
+    depends_on:
+      - mediawiki
+    restart: unless-stopped
+    image: memcached
+    command: memcached -m 8192
+  elasticsearch:
+    depends_on:
+      - mediawiki
+    restart: unless-stopped
+    image: elasticsearch:6.5.4
+    environment:
+      - 'LOG4J_FORMAT_MSG_NO_LOOKUPS=true'
+      - 'discovery.type=single-node'
+    volumes:
+      - './es-data:/usr/share/elasticsearch/data'
+volumes:
+  w:
+
+

@@ -11,8 +11,7 @@ services:
       - 80:80
       - 443:443
     volumes:
-      - w:/var/www/html/w
-      - ./html:/var/www/html
+#      - ./html:/var/www/html
       - ./secret:/var/secret
     environment:
       LOG4J_FORMAT_MSG_NO_LOOKUPS: "true"
@@ -42,7 +41,3 @@ services:
       - 'discovery.type=single-node'
     volumes:
       - './es-data:/usr/share/elasticsearch/data'
-volumes:
-  w:
-
-

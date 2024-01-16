@@ -261,7 +261,7 @@ RUN set -eux; \
 	chown -R www-data:www-data /var/www/html
 
 COPY --chown=www-data:www-data --from=mediawiki /var/www/html/w /var/www/html/w
-COPY --chown=www-data:www-data --from=extensions /var/www/html/w /var/www/html/extensions
+COPY --chown=www-data:www-data --from=extensions /var/www/html/w/extensions /var/www/html/w/extensions
 
 RUN set -eu; \
 	cd /var/www/html/w; \ 

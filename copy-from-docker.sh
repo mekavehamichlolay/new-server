@@ -1,0 +1,1 @@
+docker cp $(docker ps -q -f name=mediawiki):/var/www/html .

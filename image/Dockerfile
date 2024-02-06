@@ -232,6 +232,10 @@ RUN { \
 	echo 'opcache.revalidate_freq=60'; \
 	} > /usr/local/etc/php/conf.d/opcache-recommended.ini
 
+RUN { \
+	echo 'memory_limit=512M'; \
+	} > /usr/local/etc/php/conf.d/memory-limit.ini
+
 # Set the locale
 RUN set -eux; \
 	sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && locale-gen

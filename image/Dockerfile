@@ -129,6 +129,7 @@ RUN set -eu; \
 	CategoryLockdown \
 	CentralAuth \
 	HeadScript \
+	OAuth \
 	; \
 	chown -R www-data:www-data /var/www/html/w/extensions
 

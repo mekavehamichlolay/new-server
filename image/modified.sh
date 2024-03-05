@@ -22,8 +22,12 @@ if [ -z "$version" ] || [ ${#extensions[@]} -eq 0 ]; then
 fi
 
 for extension in "${extensions[@]}"; do
-    echo "$extension"
-    git_url="https://github.com/wikimedia/mediawiki-extensions-$extension/archive/refs/heads/REL$version.tar.gz"
+    author="wikimedia"
+    if [ "$extension" = "TextExtracts" ]; then
+        author="mekavehamichlolay"
+    fi
+    echo "$extension is downloaded from $author"
+    git_url="https://github.com/$author/mediawiki-extensions-$extension/archive/refs/heads/REL$version.tar.gz"
     set -eu; \
         cd /var/www/html/w/extensions; \
         wget -q -O "$extension.tar.gz" "$git_url"; \

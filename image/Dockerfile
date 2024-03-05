@@ -130,6 +130,7 @@ RUN set -eu; \
 	CentralAuth \
 	HeadScript \
 	OAuth \
+	TextExtracts \
 	; \
 	chown -R www-data:www-data /var/www/html/w/extensions
 

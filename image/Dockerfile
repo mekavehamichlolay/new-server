@@ -1,8 +1,8 @@
 FROM php:8.0-apache as mediawiki
-ARG MEDIAWIKI_MAJOR_VERSION_=1_39
+ARG MEDIAWIKI_MAJOR_VERSION_=1_40
 # Version
-ENV MEDIAWIKI_MAJOR_VERSION 1.39
-ENV MEDIAWIKI_VERSION 1.39.6
+ENV MEDIAWIKI_MAJOR_VERSION 1.40
+ENV MEDIAWIKI_VERSION 1.40.3
 
 RUN set -eux; \
 	mkdir -p /var/www/html/w; \
@@ -57,7 +57,7 @@ RUN	chown -R www-data:www-data /var/www/html/w/skins /var/www/html/w/cache /var/
 
 FROM php:8.0-apache as extensions
 
-ARG MEDIAWIKI_MAJOR_VERSION_=1_39
+ARG MEDIAWIKI_MAJOR_VERSION_=1_40
 RUN set -eux; \
 	\
 	apt-get update; \
@@ -260,6 +260,8 @@ COPY ./supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 # add htaccess file in root directory
 COPY .htaccess /var/www/html
 
+# FROM golang:latest as goapp
+
 FROM server
 # change install dir to w
 RUN set -eux; \
@@ -268,6 +270,12 @@ RUN set -eux; \
 
 COPY --chown=www-data:www-data --from=mediawiki /var/www/html/w /var/www/html/w
 COPY --chown=www-data:www-data --from=extensions /var/www/html/w/extensions/ /var/www/html/w/extensions/
+
+
+RUN set -eu; \
+	cd /var/www/html/w/extensions; \
+	git clone https://github.com/mekavehamichlolay/AspaklaryaLockdown.git AspaklaryaLockdown; \
+	chown -R www-data:www-data AspaklaryaLockdown
 
 RUN set -eu; \
 	cd /var/www/html/w; \ 

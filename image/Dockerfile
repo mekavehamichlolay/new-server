@@ -131,6 +131,7 @@ RUN set -eu; \
 	HeadScript \
 	OAuth \
 	TextExtracts \
+	TemplateWizard \
 	; \
 	chown -R www-data:www-data /var/www/html/w/extensions
 
@@ -259,8 +260,6 @@ COPY ./supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 # add htaccess file in root directory
 COPY .htaccess /var/www/html
-
-# FROM golang:latest as goapp
 
 FROM server
 # change install dir to w

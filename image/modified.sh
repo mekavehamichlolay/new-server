@@ -45,3 +45,12 @@ wget -q -O $purge.tar.gz https://github.com/AlPha5130/mediawiki-extensions-Purge
 [ ! -d $purge ] && mkdir ./$purge; \
 tar -xzf $purge.tar.gz -C ./$purge --strip-components 1; \
 rm $purge.tar.gz
+
+echo "download AspaklaryaLockDown";
+set -eu; \
+AspaklaryaLockDown=AspaklaryaLockDown; \
+cd /var/www/html/w/extensions; \
+wget -q -O $AspaklaryaLockDown.tar.gz https://github.com/mekavehamichlolay/AspaklaryaLockdown/archive/refs/heads/REL$version.tar.gz; \
+[ ! -d $AspaklaryaLockDown ] && mkdir ./$AspaklaryaLockDown; \
+tar -xzf $AspaklaryaLockDown.tar.gz -C ./$AspaklaryaLockDown --strip-components 1; \
+rm $AspaklaryaLockDown.tar.gz

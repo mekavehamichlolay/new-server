@@ -271,10 +271,8 @@ COPY --chown=www-data:www-data --from=mediawiki /var/www/html/w /var/www/html/w
 COPY --chown=www-data:www-data --from=extensions /var/www/html/w/extensions/ /var/www/html/w/extensions/
 
 
-RUN set -eu; \
-	cd /var/www/html/w/extensions; \
-	git clone https://github.com/mekavehamichlolay/AspaklaryaLockdown.git AspaklaryaLockdown; \
-	chown -R www-data:www-data AspaklaryaLockdown
+COPY update.sh /home/update.sh
+RUN chmod +x /home/update.sh
 
 RUN set -eu; \
 	cd /var/www/html/w; \ 

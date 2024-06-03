@@ -132,6 +132,7 @@ RUN set -eu; \
 	OAuth \
 	TextExtracts \
 	TemplateWizard \
+	CentralAuth \
 	; \
 	chown -R www-data:www-data /var/www/html/w/extensions
 

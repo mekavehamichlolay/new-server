@@ -1,8 +1,8 @@
-FROM php:8.0-apache as mediawiki
-ARG MEDIAWIKI_MAJOR_VERSION_=1_40
+FROM php:8.1-apache as mediawiki
+ARG MEDIAWIKI_MAJOR_VERSION_=1_42
 # Version
-ENV MEDIAWIKI_MAJOR_VERSION 1.40
-ENV MEDIAWIKI_VERSION 1.40.3
+ENV MEDIAWIKI_MAJOR_VERSION 1.42
+ENV MEDIAWIKI_VERSION 1.42.3
 
 RUN set -eux; \
 	mkdir -p /var/www/html/w; \
@@ -55,9 +55,9 @@ RUN set -eux;\
 
 RUN	chown -R www-data:www-data /var/www/html/w/skins /var/www/html/w/cache /var/www/html/w/images; 
 
-FROM php:8.0-apache as extensions
+FROM php:8.1-apache as extensions
 
-ARG MEDIAWIKI_MAJOR_VERSION_=1_40
+ARG MEDIAWIKI_MAJOR_VERSION_=1_42
 RUN set -eux; \
 	\
 	apt-get update; \
@@ -124,7 +124,6 @@ RUN set -eu; \
 	Echo  \
 	DiscussionTools \
 	MagicNoCache \
-	Thanks  \
 	UniversalLanguageSelector \
 	CategoryLockdown \
 	CentralAuth \
@@ -133,12 +132,13 @@ RUN set -eu; \
 	TextExtracts \
 	TemplateWizard \
 	CentralAuth \
+	Wikibase \
 	; \
 	chown -R www-data:www-data /var/www/html/w/extensions
 
 RUN rm /var/www/html/w/extensions/modified.sh
 
-FROM php:8.0-apache as server
+FROM php:8.1-apache as server
 
 # System dependencies
 RUN set -eux; \

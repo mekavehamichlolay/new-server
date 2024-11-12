@@ -1,4 +1,4 @@
-FROM php:8.1-apache as mediawiki
+FROM php:8.1-apache AS mediawiki
 ARG MEDIAWIKI_MAJOR_VERSION_=1_42
 # Version
 ENV MEDIAWIKI_MAJOR_VERSION 1.42
@@ -55,7 +55,7 @@ RUN set -eux;\
 
 RUN	chown -R www-data:www-data /var/www/html/w/skins /var/www/html/w/cache /var/www/html/w/images; 
 
-FROM php:8.1-apache as extensions
+FROM php:8.1-apache AS extensions
 
 ARG MEDIAWIKI_MAJOR_VERSION_=1_42
 RUN set -eux; \
@@ -138,7 +138,7 @@ RUN set -eu; \
 
 RUN rm /var/www/html/w/extensions/modified.sh
 
-FROM php:8.1-apache as server
+FROM php:8.1-apache AS server
 
 # System dependencies
 RUN set -eux; \

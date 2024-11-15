@@ -194,11 +194,11 @@ engine = On
 ; Default Value: On
 ; Development Value: Off
 ; Production Value: Off
-; http://php.net/short-open-tag
+; https://php.net/short-open-tag
 short_open_tag = Off
 
 ; The number of significant digits displayed in floating point numbers.
-; http://php.net/precision
+; https://php.net/precision
 precision = 14
 
 ; Output buffering is a mechanism for controlling how much output data

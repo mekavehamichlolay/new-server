@@ -105,7 +105,7 @@
 ;   Production Value: Off
 
 ; error_reporting
-;   Default Value: E_ALL & ~E_NOTICE & ~E_STRICT & ~E_DEPRECATED
+;   Default Value: E_ALL
 ;   Development Value: E_ALL
 ;   Production Value: E_ALL & ~E_DEPRECATED & ~E_STRICT
 
@@ -154,6 +154,16 @@
 ;   Development Value: "GPCS"
 ;   Production Value: "GPCS"
 
+; zend.exception_ignore_args
+;   Default Value: Off
+;   Development Value: Off
+;   Production Value: On
+
+; zend.exception_string_param_max_len
+;   Default Value: 15
+;   Development Value: 15
+;   Production Value: 0
+
 ;;;;;;;;;;;;;;;;;;;;
 ; php.ini Options  ;
 ;;;;;;;;;;;;;;;;;;;;
@@ -171,7 +181,7 @@
 ;;;;;;;;;;;;;;;;;;;;
 
 ; Enable the PHP scripting language engine under Apache.
-; http://php.net/engine
+; https://php.net/engine
 engine = On
 
 ; This directive determines whether or not PHP will recognize code between

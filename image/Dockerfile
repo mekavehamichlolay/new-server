@@ -177,7 +177,6 @@ RUN set -eux; \
 	apt-get install -y --no-install-recommends \
 	libicu-dev \
 	libonig-dev \
-    libthai-dev \
 	; \
 	\
 	docker-php-ext-install -j "$(nproc)" \
@@ -194,15 +193,6 @@ RUN set -eux; \
 	luasandbox \
 	; \
 	rm -r /tmp/pear; \
-	\
-	# Install wikidiff2
-	git clone https://gerrit.wikimedia.org/r/mediawiki/php/wikidiff2 /usr/local/include/php/ext/wikidiff2; \
-	cd /usr/local/include/php/ext/wikidiff2; \
-	phpize; \
-	./configure; \
-	make; \
-	make install; \
-	docker-php-ext-enable wikidiff2; \
 	\
 	# reset apt-mark's "manual" list so that "purge --auto-remove" will remove all build dependencies
 	apt-mark auto '.*' > /dev/null; \
@@ -246,13 +236,6 @@ RUN { \
 	echo 'opcache.max_accelerated_files=4000'; \
 	echo 'opcache.revalidate_freq=60'; \
 	} > /usr/local/etc/php/conf.d/opcache-recommended.ini
-
-RUN { \
-	echo 'wikidiff2.moved_line_threshold=0.9'; \
-	echo 'wikidiff2.change_threshold=0.9'; \
-	echo 'wikidiff2.moved_paragraph_detection_cutoff=10000'; \
-	echo 'wikidiff2.max_word_level_diff_complexity=80000000'; \
-} > /usr/local/etc/php/conf.d/wikidiff2-recommended.ini
 
 RUN { \
 	echo 'memory_limit=512M'; \

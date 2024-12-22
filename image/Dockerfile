@@ -2,7 +2,7 @@ FROM php:8.1-apache AS mediawiki
 ARG MEDIAWIKI_MAJOR_VERSION_=1_42
 # Version
 ENV MEDIAWIKI_MAJOR_VERSION 1.42
-ENV MEDIAWIKI_VERSION 1.42.3
+ENV MEDIAWIKI_VERSION 1.42.4
 
 RUN set -eux; \
 	mkdir -p /var/www/html/w; \
@@ -110,7 +110,6 @@ RUN set -eu; \
 	MetaMaster  \
 	LabeledSectionTransclusion  \
 	Kartographer  \
-	Graph  \
 	timeline  \
 	CountDownClock  \
 	CategoryTree  \

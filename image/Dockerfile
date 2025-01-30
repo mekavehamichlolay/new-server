@@ -51,9 +51,9 @@ RUN set -eux;\
 	curl -fSL "https://github.com/wikimedia/mediawiki-skins-${skin}/archive/refs/heads/REL${MEDIAWIKI_MAJOR_VERSION_}.tar.gz" -o "${skinDir}/${skin}.tar.gz"; \
 	[ ! -d "${skinDir}/${skin}" ] && mkdir "${skinDir}/${skin}"; \
 	tar -x --strip-components=1 -f "${skinDir}/${skin}.tar.gz" -C "${skinDir}/${skin}"; \
-	rm "${skinDir}/${skin}.tar.gz"; 
+	rm "${skinDir}/${skin}.tar.gz";
 
-RUN	chown -R www-data:www-data /var/www/html/w/skins /var/www/html/w/cache /var/www/html/w/images; 
+RUN     chown -R www-data:www-data /var/www/html/w/skins /var/www/html/w/cache /var/www/html/w/images;
 
 FROM php:8.1-apache AS extensions
 
@@ -67,7 +67,7 @@ RUN set -eux; \
 	rm -rf /var/lib/apt/lists/*
 
 RUN set -eux; \
-	mkdir -p /var/www/html/w /var/www/html/w/extensions 
+	mkdir -p /var/www/html/w /var/www/html/w/extensions
 
 COPY modified.sh /var/www/html/w/extensions/
 
@@ -151,18 +151,18 @@ RUN set -eux; \
 	# Required for SyntaxHighlighting
 	python3 \
 	# custom dependencies added
-	cron \  
-	supervisor \ 
-	locales \ 
-	ploticus \ 
+	cron \
+	supervisor \
+	locales \
+	ploticus \
 	fonts-freefont-ttf \
 	djvulibre-bin \
 	netpbm \
 	ffmpeg \
 	# need for composer
-	zip \ 
+	zip \
 	# not sure we need to install seprate
-	wget \ 
+	wget \
 	liblua5.1-dev \
 	; \
 	rm -rf /var/lib/apt/lists/*
@@ -237,15 +237,15 @@ RUN { \
 	} > /usr/local/etc/php/conf.d/opcache-recommended.ini
 
 RUN { \
-	echo 'memory_limit=512M'; \
+	echo 'memory_limit=1024M'; \
 	} > /usr/local/etc/php/conf.d/memory-limit.ini
 
 # Set the locale
 RUN set -eux; \
 	sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && locale-gen
-ENV LANG en_US.UTF-8  
-ENV LANGUAGE en_US:en  
-ENV LC_ALL en_US.UTF-8 
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US:en
+ENV LC_ALL en_US.UTF-8
 
 # install composer
 RUN set -eux; \
@@ -276,7 +276,7 @@ COPY update.sh /home/update.sh
 RUN chmod +x /home/update.sh
 
 RUN set -eu; \
-	cd /var/www/html/w; \ 
+	cd /var/www/html/w; \
 	mv composer.local.json-sample composer.local.json; \
 	composer install --no-dev
 

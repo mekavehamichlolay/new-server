@@ -6,7 +6,8 @@ ENV MEDIAWIKI_VERSION 1.42.4
 
 RUN set -eux; \
 	mkdir -p /var/www/html/w; \
-	chown -R www-data:www-data /var/www/html
+	chown -R root:root /var/www/html \
+	chmod -R 755 www-data:www-data /var/www/html
 
 # MediaWiki setup
 RUN set -eux; \
@@ -52,8 +53,6 @@ RUN set -eux;\
 	[ ! -d "${skinDir}/${skin}" ] && mkdir "${skinDir}/${skin}"; \
 	tar -x --strip-components=1 -f "${skinDir}/${skin}.tar.gz" -C "${skinDir}/${skin}"; \
 	rm "${skinDir}/${skin}.tar.gz";
-
-RUN     chown -R www-data:www-data /var/www/html/w/skins /var/www/html/w/cache /var/www/html/w/images;
 
 FROM php:8.1-apache AS extensions
 
@@ -132,8 +131,7 @@ RUN set -eu; \
 	TemplateWizard \
 	CentralAuth \
 	Wikibase \
-	; \
-	chown -R www-data:www-data /var/www/html/w/extensions
+	; 
 
 RUN rm /var/www/html/w/extensions/modified.sh
 
@@ -266,10 +264,12 @@ FROM server
 # change install dir to w
 RUN set -eux; \
 	mkdir -p /var/www/html/w; \
-	chown -R www-data:www-data /var/www/html
+	chown -R root:root /var/www/html
 
-COPY --chown=www-data:www-data --from=mediawiki /var/www/html/w /var/www/html/w
-COPY --chown=www-data:www-data --from=extensions /var/www/html/w/extensions/ /var/www/html/w/extensions/
+COPY --chown=root:root --from=mediawiki /var/www/html/w /var/www/html/w
+COPY --chown=root:root --from=extensions /var/www/html/w/extensions/ /var/www/html/w/extensions/
+RUN chmod -R 755 /var/www/html
+RUN chown -R www-data:www-data /var/www/html/w/images
 
 
 COPY update.sh /home/update.sh

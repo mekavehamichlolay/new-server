@@ -18,4 +18,4 @@ tar -xzf AspaklaryaLockDown.tar.gz --strip-components 1; \
 rm AspaklaryaLockDown.tar.gz; \
 rm -rf /var/www/html/w/extensions/AspaklaryaLockDown; \
 mv $tmp_dir /var/www/html/w/extensions/AspaklaryaLockDown
-chown -R www-data:www-data /var/www/html/w/extensions/AspaklaryaLockDown
+chmod -R 755 /var/www/html/w/extensions/AspaklaryaLockDown

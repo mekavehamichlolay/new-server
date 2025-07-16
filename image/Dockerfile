@@ -1,8 +1,8 @@
 FROM php:8.1-apache AS mediawiki
-ARG MEDIAWIKI_MAJOR_VERSION_=1_42
+ARG MEDIAWIKI_MAJOR_VERSION_=1_43
 # Version
-ENV MEDIAWIKI_MAJOR_VERSION 1.42
-ENV MEDIAWIKI_VERSION 1.42.4
+ENV MEDIAWIKI_MAJOR_VERSION=1.43
+ENV MEDIAWIKI_VERSION=1.43.3
 
 RUN set -eux; \
 	mkdir -p /var/www/html/w; \
@@ -56,7 +56,7 @@ RUN set -eux;\
 
 FROM php:8.1-apache AS extensions
 
-ARG MEDIAWIKI_MAJOR_VERSION_=1_42
+ARG MEDIAWIKI_MAJOR_VERSION_=1_43
 RUN set -eux; \
 	\
 	apt-get update; \
@@ -130,10 +130,10 @@ RUN set -eu; \
 	TextExtracts \
 	TemplateWizard \
 	CentralAuth \
-	Wikibase \
-	; 
+	QuickInstantCommons \
+	;
 
-RUN rm /var/www/html/w/extensions/modified.sh
+	RUN rm /var/www/html/w/extensions/modified.sh
 
 FROM php:8.1-apache AS server
 
@@ -241,9 +241,9 @@ RUN { \
 # Set the locale
 RUN set -eux; \
 	sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && locale-gen
-ENV LANG en_US.UTF-8
-ENV LANGUAGE en_US:en
-ENV LC_ALL en_US.UTF-8
+ENV LANG=en_US.UTF-8
+ENV LANGUAGE=en_US:en
+ENV LC_ALL=en_US.UTF-8
 
 # install composer
 RUN set -eux; \
@@ -271,7 +271,6 @@ COPY --chown=root:root --from=extensions /var/www/html/w/extensions/ /var/www/ht
 RUN chmod -R 755 /var/www/html
 RUN chown -R www-data:www-data /var/www/html/w/images
 
-
 COPY update.sh /home/update.sh
 RUN chmod +x /home/update.sh
 
@@ -281,5 +280,9 @@ RUN set -eu; \
 	composer install --no-dev
 
 RUN chown -R www-data:www-data /tmp
+RUN set -eu; \
+	mkdir /var/log/mediawiki; \
+	touch /var/log/mediawiki/http.log; \
+	chown www-data:www-data /var/log/mediawiki/http.log
 
 CMD ["/usr/bin/supervisord"]

@@ -1,8 +1,8 @@
 FROM php:8.1-apache AS mediawiki
-ARG MEDIAWIKI_MAJOR_VERSION_=1_43
+ARG MEDIAWIKI_MAJOR_VERSION_=1_44
 # Version
-ENV MEDIAWIKI_MAJOR_VERSION=1.43
-ENV MEDIAWIKI_VERSION=1.43.3
+ENV MEDIAWIKI_MAJOR_VERSION=1.44
+ENV MEDIAWIKI_VERSION=1.44.2
 
 RUN set -eux; \
 	mkdir -p /var/www/html/w; \
@@ -56,7 +56,7 @@ RUN set -eux;\
 
 FROM php:8.1-apache AS extensions
 
-ARG MEDIAWIKI_MAJOR_VERSION_=1_43
+ARG MEDIAWIKI_MAJOR_VERSION_=1_44
 RUN set -eux; \
 	\
 	apt-get update; \
@@ -76,7 +76,6 @@ RUN set -eu; \
 	./modified.sh --version "${MEDIAWIKI_MAJOR_VERSION_}" \
 	DeleteBatch \
 	JsonConfig \
-	CheckUser \
 	WikimediaBadges \
 	WikiLove \
 	TwoColConflict \
@@ -104,7 +103,6 @@ RUN set -eu; \
 	HitCounters \
 	YouTube \
 	wikihiero  \
-	TemplateStyles  \
 	Score  \
 	MetaMaster  \
 	LabeledSectionTransclusion  \
@@ -124,7 +122,6 @@ RUN set -eu; \
 	MagicNoCache \
 	UniversalLanguageSelector \
 	CategoryLockdown \
-	CentralAuth \
 	HeadScript \
 	OAuth \
 	TextExtracts \
@@ -133,7 +130,7 @@ RUN set -eu; \
 	QuickInstantCommons \
 	;
 
-	RUN rm /var/www/html/w/extensions/modified.sh
+RUN rm /var/www/html/w/extensions/modified.sh
 
 FROM php:8.1-apache AS server
 

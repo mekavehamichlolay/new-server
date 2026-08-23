@@ -1,8 +1,8 @@
-FROM php:8.1-apache AS mediawiki
-ARG MEDIAWIKI_MAJOR_VERSION_=1_44
+FROM php:8.4-apache AS mediawiki
+ARG MEDIAWIKI_MAJOR_VERSION_=1_45
 # Version
-ENV MEDIAWIKI_MAJOR_VERSION=1.44
-ENV MEDIAWIKI_VERSION=1.44.2
+ENV MEDIAWIKI_MAJOR_VERSION=1.45
+ENV MEDIAWIKI_VERSION=1.45.4
 
 RUN set -eux; \
 	mkdir -p /var/www/html/w; \
@@ -54,9 +54,9 @@ RUN set -eux;\
 	tar -x --strip-components=1 -f "${skinDir}/${skin}.tar.gz" -C "${skinDir}/${skin}"; \
 	rm "${skinDir}/${skin}.tar.gz";
 
-FROM php:8.1-apache AS extensions
+FROM php:8.4-apache AS extensions
 
-ARG MEDIAWIKI_MAJOR_VERSION_=1_44
+ARG MEDIAWIKI_MAJOR_VERSION_=1_45
 RUN set -eux; \
 	\
 	apt-get update; \
@@ -132,7 +132,7 @@ RUN set -eu; \
 
 RUN rm /var/www/html/w/extensions/modified.sh
 
-FROM php:8.1-apache AS server
+FROM php:8.4-apache AS server
 
 COPY php.ini-production /usr/local/etc/php/php.ini
 # System dependencies
